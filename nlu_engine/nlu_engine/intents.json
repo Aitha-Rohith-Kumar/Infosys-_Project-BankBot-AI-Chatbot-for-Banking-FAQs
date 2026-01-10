@@ -1,0 +1,28 @@
+{
+  "check_balance": [
+    "What's my account balance?",
+    "Show balance for savings account",
+    "How much money do I have?"
+  ],
+  "card_block": [
+    "Block my debit card",
+    "My credit card is lost, block it",
+    "Disable my card immediately"
+  ],
+  "find_atm": [
+    "Find nearest ATM",
+    "Where is the nearest branch or ATM?",
+    "ATM near me in Hyderabad",
+    "Any nearest ATM within 2KM"
+  ],
+  "apply_loan": [
+    "How can I apply for a home loan?",
+    "Loan eligibility for 24 months income",
+    "I want to apply for a personal loan"
+  ],
+  "open_account": [
+    "How do I open a savings account?",
+    "Documents required for account opening",
+    "Open a new salary account"
+  ]
+}
