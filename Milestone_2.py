@@ -355,9 +355,9 @@ def chatbot_page():
             # Password correct → show balance
             response = (
                 f"💰 **Account Balance**\n\n"
-                f"Account Type: **{acc[2]}**\n"
+                f"\nAccount Type: **{acc[2]}**\n\n"
                 f"Available Balance: **₹{acc[3]:,.2f}**\n\n"
-                f"_As of now_"
+                f"_As of  {datetime.now().strftime('%d %b %Y, %I:%M %p')}_"
             )
 
             st.session_state.chat.append(("bot", response))
