@@ -109,6 +109,24 @@ page = st.sidebar.selectbox(
     ["Home", "Login / Create Account", "NLU Visualizer", "Chatbot","Transaction History","Account Details","Admin Panel"]
 )
 
+st.sidebar.markdown("---")
+
+if st.session_state.logged_in or st.session_state.get("admin_logged", False):
+    if st.sidebar.button("🚪 Logout"):
+        # ---- Clear session securely ----
+        st.session_state.logged_in = False
+        st.session_state.account_no = None
+        st.session_state.chat = []
+        st.session_state.pending_transfer = None
+        st.session_state.pending_unblock = False
+        st.session_state.pending_block = False
+        st.session_state.unblock_step = 0
+        st.session_state.block_step = 0
+        st.session_state.greeted = False
+        st.session_state.admin_logged = False
+
+        st.success("✅ Logged out successfully")
+        st.rerun()
 
 
 
@@ -1100,6 +1118,9 @@ def confetti_explosion():
 def admin_panel_page():
     st.title("🛠️ Admin Panel")
 
+    
+
+
     # -------- LOGIN --------
     if not st.session_state.admin_logged:
         st.subheader("🔐 Admin Login")
@@ -1113,7 +1134,9 @@ def admin_panel_page():
                 st.rerun()
             else:
                 st.error("Invalid credentials")
-        return
+        
+        st.stop()
+    
 
     tab_dashboard, tab_logs, tab_faq, tab_suggestions, tab_analytics, tab_retrain = st.tabs([
     "📊 Dashboard",
