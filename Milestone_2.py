@@ -95,6 +95,8 @@ if "unblock_step" not in st.session_state:
 if "unblock_last6" not in st.session_state:
     st.session_state.unblock_last6 = None
 
+if "pending_balance" not in st.session_state:
+    st.session_state.pending_balance = False
 
     
 
@@ -340,6 +342,29 @@ def chatbot_page():
     if send and user_text.strip():
         st.session_state.chat.append(("user", user_text))
 
+        # ================= BALANCE VERIFICATION =================
+        if st.session_state.pending_balance:
+            acc = get_account(st.session_state.account_no)
+
+            if not verify_password(user_text, acc[4]):
+                st.session_state.chat.append(
+                    ("bot", "❌ Incorrect password. Please try again.")
+                )
+                st.rerun()
+
+            # Password correct → show balance
+            response = (
+                f"💰 **Account Balance**\n\n"
+                f"Account Type: **{acc[2]}**\n"
+                f"Available Balance: **₹{acc[3]:,.2f}**\n\n"
+                f"_As of now_"
+            )
+
+            st.session_state.chat.append(("bot", response))
+            st.session_state.pending_balance = False
+            st.rerun()
+
+
         # UNBLOCK FLOW (STATE-DRIVEN)
         if st.session_state.pending_unblock:
 
@@ -423,12 +448,12 @@ def chatbot_page():
 
         # Balance 
         if intent == "check_balance":
-            acc = get_account(st.session_state.account_no)
+            st.session_state.pending_balance = True
             response = (
-                f"💰 **Account Balance**\n\n"
-                f"Account Type: **{acc[2]}**\n"
-                f"Available Balance: **₹{acc[3]:,.2f}**"
+                "🔐 **Balance Enquiry**\n\n"
+                "Please enter your **account password** to view your balance."
             )
+
 
         #  Account details 
         elif intent == "account_details":
