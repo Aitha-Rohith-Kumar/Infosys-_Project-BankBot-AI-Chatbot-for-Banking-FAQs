@@ -23,7 +23,8 @@
         "What is my bank balance?",
         "Display balance",
         "What's my account balance?",
-        "what is the savings account balance"
+        "what is the savings account balance",
+        "check balance"
       ]
     },
     {
@@ -109,7 +110,7 @@
     {
       "name": "loan",
       "examples": [
-        "what type of loans are provided"
+        "what type of loans are provided/available?"
       ]
     }
   ]
