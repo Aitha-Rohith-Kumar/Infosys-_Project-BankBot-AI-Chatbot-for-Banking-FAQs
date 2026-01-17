@@ -151,10 +151,42 @@ User query:
 
     return completion.choices[0].message.content
 
+st.markdown("""
+<style>
+.section-box {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    padding: 28px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+
+.section-title {
+    font-size: 34px;
+    font-weight: 800;
+    color: #f8fafc;
+    margin-bottom: 6px;
+}
+
+.section-sub {
+    font-size: 16px;
+    color: #cbd5f5;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # HOME PAGE 
 def home_page():
-    st.title("🏦 BankBot AI")
-    st.subheader("Your Smart Digital Banking Assistant")
+    st.markdown("""
+    <div class="section-box">
+        <div class="section-title">🏦 BankBot AI</div>
+        <div class="section-sub">
+            Your Smart Digital Banking Assistant
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    
     st.markdown("---")
 
     st.markdown(
@@ -235,8 +267,15 @@ def home_page():
 
 #  LOGIN PAGE 
 def login_page():
-    st.title("🔐 Account Access")
-    st.caption("Secure banking login")
+    st.markdown("""
+    <div class="section-box">
+        <div class="section-title">🔐 Account Access</div>
+        <div class="section-sub">
+            Secure banking login
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
 
     login_tab, signup_tab = st.tabs(["🔑 Login", "🆕 Create Account"])
 
@@ -316,6 +355,52 @@ def nlu_page():
             with col2:
                 st.info("**Confidence:** 0.91")
 
+st.markdown("""
+<style>
+.chat-container {
+    max-height: 480px;
+    overflow-y: auto;
+    padding: 10px;
+    background: #f9fafb;
+    border-radius: 12px;
+}
+
+.chat-bubble-user {
+    background: #dcf8c6;
+    padding: 10px 14px;
+    border-radius: 14px 14px 0 14px;
+    margin: 6px 0;
+    max-width: 70%;
+    margin-left: auto;
+    font-size: 15px;
+}
+
+.chat-bubble-bot {
+    background: #f1f0f0;
+    padding: 10px 14px;
+    border-radius: 14px 14px 14px 0;
+    margin: 6px 0;
+    max-width: 70%;
+    margin-right: auto;
+    font-size: 15px;
+}
+
+.chat-time {
+    font-size: 11px;
+    color: gray;
+    margin-top: 2px;
+}
+
+.chat-header {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+}
+</style>
+""", unsafe_allow_html=True)
 
 #  CHATBOT 
 def chatbot_page():
@@ -345,16 +430,49 @@ def chatbot_page():
         st.session_state.greeted = True
 
     # ---------- Display chat ----------
+    from datetime import datetime
+
+    st.markdown('<div class="chat-container">', unsafe_allow_html=True)
+
     for sender, msg in st.session_state.chat:
+        time = datetime.now().strftime("%I:%M %p")
+
         if sender == "user":
-            st.markdown(f"🧑 **You:** {msg}")
+            st.markdown(
+                f"""
+                <div class="chat-bubble-user">
+                    {msg}
+                    <div class="chat-time">{time}</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
         else:
-            st.markdown(f"🤖 **BankBot:** {msg}")
+            st.markdown(
+                f"""
+                <div class="chat-bubble-bot">
+                    {msg}
+                    <div class="chat-time">{time}</div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
 
     # ---------- User input ----------
     with st.form("chat_form", clear_on_submit=True):
-        user_text = st.text_input("Type your message")
-        send = st.form_submit_button("Send")
+        col1, col2 = st.columns([5, 1])
+        with col1:
+            user_text = st.text_input(
+                "Type your message",
+                placeholder="Ask about balance, cards, transfers…",
+                label_visibility="collapsed"
+            )
+        with col2:
+            send = st.form_submit_button("➤")
+
 
     #  Handle message 
     if send and user_text.strip():
@@ -478,8 +596,8 @@ def chatbot_page():
             acc = get_account(st.session_state.account_no)
             response = (
                 f"👤 **Account Details**\n\n"
-                f"Account Holder: **{acc[1]}**\n"
-                f"Account Number: **{acc[0]}**\n"
+                f"Account Holder Name: **{acc[1]}**\n\n"
+                f"Account Number: **{acc[0]}**\n\n"
                 f"Account Type: **{acc[2]}**"
             )
 
@@ -817,7 +935,7 @@ def account_details_page():
 
     st.subheader("📄 Account Information")
     st.markdown(f"""
-    **Account Holder:** {acc[1]}  
+    **Account Holder Name:** {acc[1]}  
     **Account Number:** {acc[0]}  
     **Account Type:** {acc[2]}  
     **Account Balance:** ₹{acc[3]:,.2f}

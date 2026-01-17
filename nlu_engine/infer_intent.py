@@ -109,7 +109,10 @@ def predict_intent(text: str, top_k: int = 3):
     
     if "interest rate" in t:
         return "interest_rate", 0.85, {}
-    
+
+    if any(w in t for w in ["account details", "account info", "account information","my account details","show my account details","view account details"]):
+        return "account_details", 0.90, {}
+
     if any(k in t for k in ["block my card", "lost my card", "stolen my card","block atm card","block card","lost card","stolen card"]):
         return "block_card", 0.95, {}
 
