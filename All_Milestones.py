@@ -329,8 +329,15 @@ def login_page():
 
 # NLU VISUALIZER
 def nlu_page():
-    st.title("🧠 NLU Visualizer")
-    st.caption("Intent Classification Demo")
+    st.markdown("""
+    <div class="section-box">
+        <div class="section-title">🧠 NLU Visualizer</div>
+        <div class="section-sub">
+            Visualizes detected intents, confidence scores, and
+            extracted entities for better transparency.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
     st.markdown("---")
 
     text = st.text_input(
@@ -404,8 +411,15 @@ st.markdown("""
 
 #  CHATBOT 
 def chatbot_page():
-    st.markdown("## 💬 BankBot AI")
-    st.caption("Your virtual banking assistant")
+    st.markdown("""
+    <div class="section-box">
+        <div class="section-title">💬 BankBot AI</div>
+        <div class="section-sub">
+            Your virtual banking assistant
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
 
     if not st.session_state.logged_in:
         st.warning("🔐 Please login to use the chatbot")
@@ -490,7 +504,7 @@ def chatbot_page():
 
             # Password correct → show balance
             response = (
-                f"💰 **Account Balance**\n\n"
+                f"💰 Account Balance\n\n"
                 f"\nAccount Type: **{acc[2]}**\n\n"
                 f"Available Balance: **₹{acc[3]:,.2f}**\n\n"
                 f"_As of  {datetime.now().strftime('%d %b %Y, %I:%M %p')}_"
@@ -586,7 +600,7 @@ def chatbot_page():
         if intent == "check_balance":
             st.session_state.pending_balance = True
             response = (
-                "🔐 **Balance Enquiry**\n\n"
+                "🔐 Balance Enquiry\n\n"
                 "Please enter your **account password** to view your balance."
             )
 
@@ -754,9 +768,68 @@ def get_card_style(card_type, category, status):
 
     return "bank-card debit-visa"
 
+st.markdown("""
+<style>
+.kpi-card {
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    border-radius: 18px;
+    padding: 26px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.kpi-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.18);
+}
+
+.kpi-icon {
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.kpi-value {
+    font-size: 36px;
+    font-weight: 800;
+    margin: 6px 0;
+}
+
+.kpi-label {
+    font-size: 15px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* Accent bars */
+.kpi-credit::before,
+.kpi-debit::before,
+.kpi-total::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 6px;
+    width: 100%;
+}
+
+.kpi-credit::before { background: #22c55e; }
+.kpi-debit::before { background: #ef4444; }
+.kpi-total::before  { background: #2563eb; }
+</style>
+""", unsafe_allow_html=True)
+
+
 def transaction_history_page():
-    st.title("📜 Transaction History")
-    st.caption("Your recent banking transactions")
+    st.markdown("""
+    <div class="section-box">
+        <div class="section-title">📜 Transaction History</div>
+        <div class="section-sub">
+            Your recent banking transactions
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     if not st.session_state.logged_in:
         st.warning("🔐 Please login to view transaction history")
@@ -766,24 +839,174 @@ def transaction_history_page():
 
     data = get_transaction_history(account_no)
 
-    if not data:
-        st.info("No transactions found.")
-        return
+    # -------- SUMMARY METRICS --------
+    total_txns = len(data)
+    total_credit = sum(row[2] for row in data if row[1] == account_no)
+    total_debit = sum(row[2] for row in data if row[0] == account_no)
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.markdown(f"""
+        <div class="kpi-card kpi-total">
+            <div class="kpi-icon">📄</div>
+            <div class="kpi-value">{total_txns}</div>
+            <div class="kpi-label">Total Transactions</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c2:
+        st.markdown(f"""
+        <div class="kpi-card kpi-credit">
+            <div class="kpi-icon">⬇️</div>
+            <div class="kpi-value" style="color:#22c55e;">
+                ₹{total_credit:,.0f}
+            </div>
+            <div class="kpi-label">Total Credit</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c3:
+        st.markdown(f"""
+        <div class="kpi-card kpi-debit">
+            <div class="kpi-icon">⬆️</div>
+            <div class="kpi-value" style="color:#ef4444;">
+                ₹{total_debit:,.0f}
+            </div>
+            <div class="kpi-label">Total Debit</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    from datetime import datetime
+
+
+    st.markdown("""
+        <div class="section-box">
+            <div class="section-title">🔍 Filter Transactions</div>
+            <div class="section-sub">
+                Narrow down transactions by date range and type 
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    f1, f2, f3 = st.columns([2, 2, 2])
+
+    with f1:
+        start_date = st.date_input(
+            "From Date",
+            value=None
+        )
+
+    with f2:
+        end_date = st.date_input(
+            "To Date",
+            value=None
+        )
+
+    with f3:
+        txn_type_filter = st.selectbox(
+            "Transaction Type",
+            ["All", "Credit", "Debit"]
+        )
+
+
 
     # Convert to table-friendly format
     table_data = []
+
     for row in data:
+        from_acc, to_acc, amount, ts = row
+
+        # Parse timestamp → datetime
+        txn_dt = datetime.fromisoformat(ts)
+
+        # Determine transaction type
+        if from_acc == account_no:
+            txn_type = "Debit"
+            amount_display = f"-₹{amount:,.2f}"
+        else:
+            txn_type = "Credit"
+            amount_display = f"+₹{amount:,.2f}"
+
+        # -------- APPLY TYPE FILTER --------
+        if txn_type_filter != "All" and txn_type != txn_type_filter:
+            continue
+
+        # -------- APPLY DATE FILTER --------
+        if start_date and txn_dt.date() < start_date:
+            continue
+
+        if end_date and txn_dt.date() > end_date:
+            continue
+
         table_data.append({
-            "From Account": row[0],
-            "To Account": row[1],
-            "Amount (₹)": f"{row[2]:,.2f}",
-            "Date & Time": row[3]
+            "From Account": from_acc,
+            "To Account": to_acc,
+            "Amount": amount_display,
+            "Type": txn_type.upper(),
+            "Date & Time": txn_dt.strftime("%Y-%m-%d %H:%M:%S")
         })
 
+
+
+
+
+    import pandas as pd
+
+    df = pd.DataFrame(table_data)
+
+    if df.empty:
+        st.info("No transactions found for the selected filters.")
+        return
+
+    def color_amount(val):
+        if isinstance(val, str) and val.startswith("+"):
+            return "color: green; font-weight: 600;"
+        if isinstance(val, str) and val.startswith("-"):
+            return "color: red; font-weight: 600;"
+        return ""
+
+    styled_df = (
+        df.style
+        .applymap(color_amount, subset=["Amount"])  # 👈 change name if needed
+        .set_properties(**{
+            "text-align": "center",
+            "font-size": "14px"
+        })
+        .set_table_styles([
+            {"selector": "th", "props": [("font-weight", "700"), ("text-align", "center")]},
+            {"selector": "td", "props": [("padding", "10px")]},
+        ])
+    )
+
     st.dataframe(
-        table_data,
+        styled_df,
+        use_container_width=True,
+        hide_index=True
+    )
+
+    from io import StringIO
+    from datetime import datetime
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    csv_buffer = StringIO()
+    df.to_csv(csv_buffer, index=False)
+
+    filename = f"BankBot_Transaction_Statement_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+
+    st.download_button(
+        label="⬇️ Download Statement (CSV)",
+        data=csv_buffer.getvalue(),
+        file_name=filename,
+        mime="text/csv",
         use_container_width=True
     )
+
+
+
 
 st.markdown("""
 <style>
@@ -923,8 +1146,17 @@ def get_card_logo(category):
         return '<img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" class="logo"/>'
     return ""
 
+
+
 def account_details_page():
-    st.title("👤 Account Details")
+    st.markdown("""
+    <div class="section-box">
+        <div class="section-title">👤 Account Details</div>
+        <div class="section-sub">
+            View and manage your account information and cards
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     if not st.session_state.logged_in:
         st.warning("🔐 Please login to view account details")
@@ -934,12 +1166,51 @@ def account_details_page():
     acc = get_account(st.session_state.account_no)
 
     st.subheader("📄 Account Information")
-    st.markdown(f"""
-    **Account Holder Name:** {acc[1]}  
-    **Account Number:** {acc[0]}  
-    **Account Type:** {acc[2]}  
-    **Account Balance:** ₹{acc[3]:,.2f}
-    """)
+    
+
+    c1, c2, c3, c4 = st.columns(4)
+
+    with c1:
+        st.markdown(f"""
+        <div class="kpi-card">
+            <div class="kpi-icon">🧑 Account Holder Name</div>
+            <div class="kpi-value" style="font-size:18px;">
+                {acc[1]}
+            </div>           
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c2:
+        st.markdown(f"""
+        <div class="kpi-card">
+            <div class="kpi-icon">🏦 Account Number</div>
+            <div class="kpi-value" style="font-size:18px;">
+                {acc[0]}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c3:
+        st.markdown(f"""
+        <div class="kpi-card">
+            <div class="kpi-icon">📂 Account Type</div>
+            <div class="kpi-value">
+                {acc[2]}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c4:
+        st.markdown(f"""
+        <div class="kpi-card kpi-credit">
+            <div class="kpi-icon">💰Available Balance</div>
+            <div class="kpi-value" style="color:#22c55e;">
+                ₹{acc[3]:,.2f}
+            </div>
+            <div class="kpi-label">Available Balance</div>
+        </div>
+        """, unsafe_allow_html=True)
+
 
     st.markdown("---")
 

@@ -116,7 +116,7 @@ def predict_intent(text: str, top_k: int = 3):
     if any(k in t for k in ["block my card", "lost my card", "stolen my card","block atm card","block card","lost card","stolen card"]):
         return "block_card", 0.95, {}
 
-    if any(w in t for w in ["bye", "exit", "quit","see you","goodbye","have a nice day"]):
+    if any(w in t for w in ["bye", "exit", "quit","see you","goodbye","have a nice day","talk to you later","catch you later","see you later"]):
         return "goodbye", 0.93, {}
 
     return "out_of_scope", 0.50, {}
