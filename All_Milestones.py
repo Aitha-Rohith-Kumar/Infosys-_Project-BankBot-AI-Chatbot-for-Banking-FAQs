@@ -151,29 +151,6 @@ User query:
 
     return completion.choices[0].message.content
 
-st.markdown("""
-<style>
-.section-box {
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    padding: 28px;
-    border-radius: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-}
-
-.section-title {
-    font-size: 34px;
-    font-weight: 800;
-    color: #f8fafc;
-    margin-bottom: 6px;
-}
-
-.section-sub {
-    font-size: 16px;
-    color: #cbd5f5;
-}
-</style>
-""", unsafe_allow_html=True)
 
 # HOME PAGE 
 def home_page():
@@ -184,6 +161,30 @@ def home_page():
             Your Smart Digital Banking Assistant
         </div>
     </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <style>
+    .section-box {
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        padding: 28px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+
+    .section-title {
+        font-size: 34px;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 6px;
+    }
+
+    .section-sub {
+        font-size: 16px;
+        color: #cbd5f5;
+    }
+    </style>
     """, unsafe_allow_html=True)
 
     
@@ -275,6 +276,29 @@ def login_page():
         </div>
     </div>
     """, unsafe_allow_html=True)
+    st.markdown("""
+    <style>
+    .section-box {
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        padding: 28px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+
+    .section-title {
+        font-size: 34px;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 6px;
+    }
+
+    .section-sub {
+        font-size: 16px;
+        color: #cbd5f5;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 
     login_tab, signup_tab = st.tabs(["🔑 Login", "🆕 Create Account"])
@@ -337,6 +361,29 @@ def nlu_page():
             extracted entities for better transparency.
         </div>
     </div>
+    """, unsafe_allow_html=True)
+    st.markdown("""
+    <style>
+    .section-box {
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        padding: 28px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+
+    .section-title {
+        font-size: 34px;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 6px;
+    }
+
+    .section-sub {
+        font-size: 16px;
+        color: #cbd5f5;
+    }
+    </style>
     """, unsafe_allow_html=True)
     st.markdown("---")
 
@@ -418,6 +465,29 @@ def chatbot_page():
             Your virtual banking assistant
         </div>
     </div>
+    """, unsafe_allow_html=True)
+    st.markdown("""
+    <style>
+    .section-box {
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        padding: 28px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+
+    .section-title {
+        font-size: 34px;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 6px;
+    }
+
+    .section-sub {
+        font-size: 16px;
+        color: #cbd5f5;
+    }
+    </style>
     """, unsafe_allow_html=True)
     
 
@@ -768,57 +838,7 @@ def get_card_style(card_type, category, status):
 
     return "bank-card debit-visa"
 
-st.markdown("""
-<style>
-.kpi-card {
-    background: linear-gradient(135deg, #ffffff, #f8fafc);
-    border-radius: 18px;
-    padding: 26px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
 
-.kpi-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.18);
-}
-
-.kpi-icon {
-    font-size: 34px;
-    margin-bottom: 10px;
-}
-
-.kpi-value {
-    font-size: 36px;
-    font-weight: 800;
-    margin: 6px 0;
-}
-
-.kpi-label {
-    font-size: 15px;
-    color: #64748b;
-    font-weight: 500;
-}
-
-/* Accent bars */
-.kpi-credit::before,
-.kpi-debit::before,
-.kpi-total::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 6px;
-    width: 100%;
-}
-
-.kpi-credit::before { background: #22c55e; }
-.kpi-debit::before { background: #ef4444; }
-.kpi-total::before  { background: #2563eb; }
-</style>
-""", unsafe_allow_html=True)
 
 
 def transaction_history_page():
@@ -829,6 +849,84 @@ def transaction_history_page():
             Your recent banking transactions
         </div>
     </div>
+    """, unsafe_allow_html=True)
+
+    #custom CSS for Headings
+    st.markdown("""
+    <style>
+    .section-box {
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        padding: 28px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+
+    .section-title {
+        font-size: 34px;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 6px;
+    }
+
+    .section-sub {
+        font-size: 16px;
+        color: #cbd5f5;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    #custom CSS for KPI cards
+    st.markdown("""
+    <style>
+    .kpi-card {
+        background: linear-gradient(135deg, #ffffff, #f8fafc);
+        border-radius: 18px;
+        padding: 26px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .kpi-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.18);
+    }
+
+    .kpi-icon {
+        font-size: 34px;
+        margin-bottom: 10px;
+    }
+
+    .kpi-value {
+        font-size: 36px;
+        font-weight: 800;
+        margin: 6px 0;
+    }
+
+    .kpi-label {
+        font-size: 15px;
+        color: #64748b;
+        font-weight: 500;
+    }
+
+    /* Accent bars */
+    .kpi-credit::before,
+    .kpi-debit::before,
+    .kpi-total::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 6px;
+        width: 100%;
+    }
+
+    .kpi-credit::before { background: #22c55e; }
+    .kpi-debit::before { background: #ef4444; }
+    .kpi-total::before  { background: #2563eb; }
+    </style>
     """, unsafe_allow_html=True)
 
     if not st.session_state.logged_in:
@@ -1157,6 +1255,29 @@ def account_details_page():
         </div>
     </div>
     """, unsafe_allow_html=True)
+    st.markdown("""
+    <style>
+    .section-box {
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        padding: 28px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+
+    .section-title {
+        font-size: 34px;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 6px;
+    }
+
+    .section-sub {
+        font-size: 16px;
+        color: #cbd5f5;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     if not st.session_state.logged_in:
         st.warning("🔐 Please login to view account details")
@@ -1165,57 +1286,99 @@ def account_details_page():
     # ================= ACCOUNT INFO =================
     acc = get_account(st.session_state.account_no)
 
-    st.subheader("📄 Account Information")
     
+    st.markdown("""
+    <style>
+    .kpi-card {
+        width: 100%;
+        height: 180px;
+        background: linear-gradient(135deg, #ffffff, #f8fafc);
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 16px 35px rgba(0,0,0,0.12);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
 
+    .kpi-icon {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+
+    .kpi-value {
+        font-size: 24px;
+        font-weight: 700;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .kpi-label {
+        font-size: 14px;
+        color: #64748b;
+        margin-top: 6px;
+    }
+
+    
+    </style>
+    """, unsafe_allow_html=True)
+    
     c1, c2, c3, c4 = st.columns(4)
 
     with c1:
         st.markdown(f"""
         <div class="kpi-card">
-            <div class="kpi-icon">🧑 Account Holder Name</div>
-            <div class="kpi-value" style="font-size:18px;">
-                {acc[1]}
-            </div>           
+            <div class="kpi-icon">🧑</div>
+            <div class="kpi-value">{acc[1]}</div>
+            <div class="kpi-label">Account Holder Name</div>
         </div>
         """, unsafe_allow_html=True)
 
     with c2:
         st.markdown(f"""
         <div class="kpi-card">
-            <div class="kpi-icon">🏦 Account Number</div>
-            <div class="kpi-value" style="font-size:18px;">
-                {acc[0]}
-            </div>
+            <div class="kpi-icon">🏦</div>
+            <div class="kpi-value">{acc[0]}</div>
+            <div class="kpi-label">Account Number</div>
         </div>
         """, unsafe_allow_html=True)
 
     with c3:
         st.markdown(f"""
         <div class="kpi-card">
-            <div class="kpi-icon">📂 Account Type</div>
-            <div class="kpi-value">
-                {acc[2]}
-            </div>
+            <div class="kpi-icon">📂</div>
+            <div class="kpi-value">{acc[2]}</div>
+            <div class="kpi-label">Account Type</div>
         </div>
         """, unsafe_allow_html=True)
 
     with c4:
         st.markdown(f"""
-        <div class="kpi-card kpi-credit">
-            <div class="kpi-icon">💰Available Balance</div>
-            <div class="kpi-value" style="color:#22c55e;">
-                ₹{acc[3]:,.2f}
-            </div>
+        <div class="kpi-card">
+            <div class="kpi-icon">💰</div>
+            <div class="kpi-value">₹{acc[3]:,.2f}</div>
             <div class="kpi-label">Available Balance</div>
         </div>
         """, unsafe_allow_html=True)
 
 
+    
     st.markdown("---")
 
     # ================= CARDS SECTION =================
-    st.subheader("💳 Your Cards")
+    
+    st.markdown("""
+    <div class="section-box">
+        <div class="section-title">💳 Your Cards</div>
+        <div class="section-sub">
+            Manage your debit and credit cards
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     cards = get_cards(acc[0])
 
@@ -1375,140 +1538,42 @@ def account_details_page():
             )
             st.success("✅ Card added successfully")
             st.rerun()
-
-st.markdown("""
-<style>
-/* ---- CONFETTI BASE ---- */
-.confetti {
-  position: fixed;
-  bottom: 0;
-  width: 10px;
-  height: 20px;
-  background-color: red;
-  animation: confetti-fall 3s linear forwards;
-  opacity: 0.9;
-  z-index: 9999;
-}
-
-/* Left & Right origins */
-.confetti.left {
-  left: 5%;
-  animation-name: confetti-left;
-}
-.confetti.right {
-  right: 5%;
-  animation-name: confetti-right;
-}
-
-/* Colors */
-.confetti.c1 { background: #ff4d4d; }
-.confetti.c2 { background: #4da6ff; }
-.confetti.c3 { background: #4dff88; }
-.confetti.c4 { background: #ffd24d; }
-.confetti.c5 { background: #c77dff; }
-
-/* Left animation */
-@keyframes confetti-left {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  100% { transform: translate(300px, -600px) rotate(720deg); opacity: 0; }
-}
-
-/* Right animation */
-@keyframes confetti-right {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  100% { transform: translate(-300px, -600px) rotate(-720deg); opacity: 0; }
-}
-</style>
-""", unsafe_allow_html=True)
-
-def confetti_blast():
-    confetti_html = ""
-    colors = ["c1", "c2", "c3", "c4", "c5"]
-
-    for i in range(15):
-        confetti_html += f"""
-        <div class="confetti left {colors[i % 5]}" style="animation-delay:{i*0.05}s"></div>
-        <div class="confetti right {colors[i % 5]}" style="animation-delay:{i*0.05}s"></div>
-        """
-
-    st.markdown(confetti_html, unsafe_allow_html=True)
-
-st.markdown("""
-<style>
-/* ================= CONFETTI PARTICLES ================= */
-.confetti-particle {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
-  opacity: 0.9;
-  z-index: 9999;
-  animation-duration: 2.5s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
-}
-
-/* Some circles */
-.confetti-circle {
-  border-radius: 50%;
-}
-
-/* Colors */
-.c-red { background: #ff4d4d; }
-.c-blue { background: #4da6ff; }
-.c-green { background: #4dff88; }
-.c-yellow { background: #ffd24d; }
-.c-purple { background: #c77dff; }
-.c-cyan { background: #4dffff; }
-
-/* LEFT explosion */
-@keyframes explode-left {
-  0%   { transform: translate(0, 0) rotate(0deg); opacity: 1; }
-  100% { transform: translate(300px, -600px) rotate(720deg); opacity: 0; }
-}
-
-/* RIGHT explosion */
-@keyframes explode-right {
-  0%   { transform: translate(0, 0) rotate(0deg); opacity: 1; }
-  100% { transform: translate(-300px, -600px) rotate(-720deg); opacity: 0; }
-}
-</style>
-""", unsafe_allow_html=True)
-
-def confetti_explosion():
-    colors = ["c-red", "c-blue", "c-green", "c-yellow", "c-purple", "c-cyan"]
-    html = ""
-
-    for i in range(30):
-        color = colors[i % len(colors)]
-        shape = "confetti-circle" if i % 3 == 0 else ""
-        delay = i * 0.02
-
-        # LEFT SIDE
-        html += f"""
-        <div class="confetti-particle {color} {shape}"
-             style="left:5%; bottom:0;
-             animation-name: explode-left;
-             animation-delay:{delay}s;">
-        </div>
-        """
-
-        # RIGHT SIDE
-        html += f"""
-        <div class="confetti-particle {color} {shape}"
-             style="right:5%; bottom:0;
-             animation-name: explode-right;
-             animation-delay:{delay}s;">
-        </div>
-        """
-
-    st.markdown(html, unsafe_allow_html=True)
-
-def admin_panel_page():
-    st.title("🛠️ Admin Panel")
+    
 
     
 
+
+
+def admin_panel_page():
+    st.markdown("""
+    <div class="section-box">
+        <div class="section-title">🛠️ Admin Panel</div>
+        <div class="section-sub">
+            Manage chatbot data, view analytics, and retrain the model
+    </div>
+    """, unsafe_allow_html=True)
+    st.markdown("""
+        <style>
+        .section-box {
+            background: #f8f9fa;
+            padding: 22px;
+            border-radius: 18px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .section-sub {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+    
 
     # -------- LOGIN --------
     if not st.session_state.admin_logged:
@@ -2344,30 +2409,55 @@ def admin_panel_page():
 
 
 
-def log_faq_suggestion(user_text, confidence):
+def log_faq_suggestion(question, confidence):
     conn = get_conn()
     cur = conn.cursor()
 
+    # Check if question already exists
     cur.execute(
-        "SELECT id, frequency FROM faq_suggestions WHERE question=?",
-        (user_text,)
+        """
+        SELECT id, frequency, avg_confidence
+        FROM faq_suggestions
+        WHERE question = ?
+        """,
+        (question,)
     )
     row = cur.fetchone()
 
     if row:
-        cur.execute("""
+        faq_id, freq, avg_conf = row
+
+        # Calculate new average confidence
+        new_avg = (
+            (avg_conf * freq + confidence) / (freq + 1)
+            if avg_conf is not None else confidence
+        )
+
+        cur.execute(
+            """
             UPDATE faq_suggestions
             SET frequency = frequency + 1,
-                last_asked = ist_now(),
-            WHERE id=?
-        """, (row[0],)) 
+                avg_confidence = ?,
+                last_asked = datetime('now')
+            WHERE id = ?
+            """,
+            (new_avg, faq_id)
+        )
+
     else:
-        cur.execute("""
-            INSERT INTO faq_suggestions (question, avg_confidence, last_asked)
-            VALUES (?, ?, ?)
-        """, (user_text, confidence, ist_now()))
+        # First time this question appears
+        cur.execute(
+            """
+            INSERT INTO faq_suggestions
+            (question, frequency, avg_confidence, last_asked)
+            VALUES (?, 1, ?, datetime('now'))
+            """,
+            (question, confidence)
+        )
+
     conn.commit()
     conn.close()
+
 
 # ================= ROUTER =================
 if page == "Home":
