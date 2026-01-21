@@ -17,7 +17,7 @@ prompt = PromptTemplate.from_template(
     "You are a helpful AI teacher.\n\nQuestion: {question}\n\nAnswer step by step:"
 )
 
-# ✔️ New LangChain pipeline style
+# New LangChain pipeline style
 chain = prompt | llm
 
 # Run the chain

@@ -224,7 +224,7 @@ def unblock_card_by_last6(account_no, last6_digits, password):
     conn = get_conn()
     cur = conn.cursor()
 
-    # ---- Verify account password ----
+    # Verify account password
     cur.execute(
         "SELECT password_hash FROM accounts WHERE account_number = ?",
         (account_no,)
@@ -234,7 +234,7 @@ def unblock_card_by_last6(account_no, last6_digits, password):
         conn.close()
         return "❌ Incorrect password. Unblock failed."
 
-    # ---- Find BLOCKED card matching last 6 digits ----
+    # Find BLOCKED card matching last 6 digits 
     cur.execute(
         """
         SELECT card_number FROM cards
@@ -250,7 +250,7 @@ def unblock_card_by_last6(account_no, last6_digits, password):
         conn.close()
         return "❌ No blocked card found with those last 6 digits."
 
-    # ---- Unblock card ----
+    # Unblock card
     cur.execute(
         """
         UPDATE cards

@@ -93,7 +93,7 @@ else:
         api_key=api_key
     )
 
-    # ✅ Single-line input box
+    # Single-line input box
     user_input = st.text_input(
         "Enter your prompt:",
         value="What is a data scientist? Explain step by step."

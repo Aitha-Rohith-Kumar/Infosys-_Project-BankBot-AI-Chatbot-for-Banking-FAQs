@@ -45,7 +45,7 @@ if __name__ == "__main__":
     ic = IntentClassifier()
     print(ic.predict("Please transfer ₹2,500 to account 9988776655", top_k=5))
 
-# -------------------- SAFE WRAPPER FOR UI --------------------
+# SAFE WRAPPER FOR UI
 _classifier = None
 
 
@@ -57,7 +57,7 @@ def predict_intent(text: str, top_k: int = 3):
     """
     global _classifier
 
-    # ---------- TRY ML ----------
+    # TRY ML 
     try:
         if _classifier is None:
             _classifier = IntentClassifier()
@@ -75,7 +75,7 @@ def predict_intent(text: str, top_k: int = 3):
     except Exception:
         pass  # silently fall back
 
-    # ---------- FALLBACK DEMO LOGIC ----------
+    # FALLBACK DEMO LOGIC 
     t = text.lower()
 
     if any(w in t for w in ["hi", "hello", "hey","good morning","good afternoon","good evening","thanks","thank you","thanks alot","nice work"]):
