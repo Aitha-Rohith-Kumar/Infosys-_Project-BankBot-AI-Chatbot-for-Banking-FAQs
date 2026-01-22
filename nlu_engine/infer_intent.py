@@ -117,6 +117,6 @@ def predict_intent(text: str, top_k: int = 3):
         return "block_card", 0.95, {}
 
     if any(w in t for w in ["bye", "exit", "quit","see you","goodbye","have a nice day","talk to you later","catch you later","see you later"]):
-        return "goodbye", 0.93, {}
+        return "goodbye", 0.89, {}
 
-    return "out_of_scope", 0.50, {}
+    return "out_of_scope", 0.40, {}

@@ -1301,6 +1301,8 @@ def account_details_page():
         align-items: center;
         justify-content: center;
         text-align: center;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
     }
 
     .kpi-icon {
@@ -1322,6 +1324,29 @@ def account_details_page():
         color: #64748b;
         margin-top: 6px;
     }
+                
+    .kpi-card:hover {
+        transform: translateY(-4px);
+    }
+    /* VARIANTS */
+    .kpi-blue {
+        border-color: #2563eb;
+    }
+    
+    
+    .kpi-amber {
+        border-color: #f59e0b;
+    }
+
+    .kpi-green {
+        border-color: #16a34a;
+    }
+    
+
+    .kpi-purple {
+        border-color: #7c3aed;
+    }
+    
 
     
     </style>
@@ -1331,7 +1356,7 @@ def account_details_page():
 
     with c1:
         st.markdown(f"""
-        <div class="kpi-card">
+        <div class="kpi-card kpi-blue">
             <div class="kpi-icon">🧑</div>
             <div class="kpi-value">{acc[1]}</div>
             <div class="kpi-label">Account Holder Name</div>
@@ -1340,7 +1365,7 @@ def account_details_page():
 
     with c2:
         st.markdown(f"""
-        <div class="kpi-card">
+        <div class="kpi-card kpi-purple">
             <div class="kpi-icon">🏦</div>
             <div class="kpi-value">{acc[0]}</div>
             <div class="kpi-label">Account Number</div>
@@ -1349,7 +1374,7 @@ def account_details_page():
 
     with c3:
         st.markdown(f"""
-        <div class="kpi-card">
+        <div class="kpi-card kpi-amber">
             <div class="kpi-icon">📂</div>
             <div class="kpi-value">{acc[2]}</div>
             <div class="kpi-label">Account Type</div>
@@ -1358,7 +1383,7 @@ def account_details_page():
 
     with c4:
         st.markdown(f"""
-        <div class="kpi-card">
+        <div class="kpi-card kpi-green">
             <div class="kpi-icon">💰</div>
             <div class="kpi-value">₹{acc[3]:,.2f}</div>
             <div class="kpi-label">Available Balance</div>
@@ -1619,7 +1644,7 @@ def admin_panel_page():
         st.markdown("""
         <style>
         .section-box {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #eef2ff, #f8fafc);
             padding: 22px;
             border-radius: 18px;
             margin-bottom: 28px;
@@ -1984,20 +2009,69 @@ def admin_panel_page():
         with col2:
             st.markdown("""
             <div class="section-box">
-                <div class="section-title">🥧 Intent Distribution (%)</div>
-                <div class="section-sub">Relative share of intents</div>
+                <div class="section-title">📌 Top User Intents</div>
+                <div class="section-sub">Most frequently detected intents from user queries</div>
             </div>
             """, unsafe_allow_html=True)
 
-            fig1, ax1 = plt.subplots()
-            ax1.pie(
-                intent_counts,
-                labels=intent_counts.index,
-                autopct="%1.1f%%",
-                startangle=90
+            conn = get_conn()
+
+            df_intents = pd.read_sql("""
+                SELECT intent, COUNT(*) as count
+                FROM chat_logs
+                WHERE intent IS NOT NULL
+                GROUP BY intent
+                ORDER BY count DESC
+            """, conn)
+
+            conn.close()
+
+
+            import plotly.express as px
+
+            # ---- Take only TOP 6 intents ----
+            intent_df = (
+                df_intents
+                .sort_values("count", ascending=False)  # highest first
+                .head(6)                                # only top 6
+                .sort_values("count", ascending=True)  # reorder for horizontal bar
             )
-            ax1.axis("equal")
-            st.pyplot(fig1)
+
+            fig = px.bar(
+                intent_df,
+                x="count",
+                y="intent",
+                orientation="h",
+                color="count",
+                color_continuous_scale="Blues",
+                text="count"
+            )
+
+            fig.update_traces(
+                hovertemplate=
+                    "<b>Intent:</b> %{y}<br>"
+                    "<b>Queries:</b> %{x}<extra></extra>",
+                textposition="outside",
+            )
+
+            fig.update_layout(
+                xaxis_title="Number of Queries",
+                yaxis_title="",
+                showlegend=False,
+                height=420,
+                margin=dict(l=120, r=40, t=20, b=40)
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True,
+                config={
+                    "displayModeBar": False
+                }
+            )
+
+
+
 
     # ---------- ROW 2 ----------
         col3, col4 = st.columns(2)
@@ -2025,11 +2099,71 @@ def admin_panel_page():
             </div>
             """, unsafe_allow_html=True)
 
-            fig2, ax2 = plt.subplots()
-            ax2.hist(df["confidence"], bins=10)
-            ax2.set_xlabel("Confidence Score")
-            ax2.set_ylabel("Query Count")
-            st.pyplot(fig2)
+            conn = get_conn()
+
+            df_conf = pd.read_sql(
+                "SELECT confidence FROM chat_logs WHERE confidence IS NOT NULL",
+                conn
+            )
+
+            conn.close()
+
+            def confidence_bucket(conf):
+                if conf < 0.5:
+                    return "Low (<0.5)"
+                elif conf <= 0.8:
+                    return "Medium (0.5–0.8)"
+                else:
+                    return "High (>0.8)"
+
+            df_conf["bucket"] = df_conf["confidence"].apply(confidence_bucket)
+
+            bucket_counts = (
+                df_conf["bucket"]
+                .value_counts()
+                .reindex(["Low (<0.5)", "Medium (0.5–0.8)", "High (>0.8)"], fill_value=0)
+            )
+
+
+            import plotly.express as px
+
+            fig = px.pie(
+                names=bucket_counts.index,
+                values=bucket_counts.values,
+                hole=0.5,   # donut style (important)
+                color=bucket_counts.index,
+                color_discrete_map={
+                    "Low (<0.5)": "#fe0000",
+                    "Medium (0.5–0.8)": "#f59e0b",
+                    "High (>0.8)": "#22c55e"
+                }
+            )
+
+            fig.update_traces(
+                textinfo="percent",          # 👈 remove labels inside
+                textfont_size=16,
+                hovertemplate="<b>%{label}</b><br>Queries: %{value}<br>%{percent}<extra></extra>"
+            )
+
+            fig.update_layout(
+                showlegend=True,
+                legend=dict(
+                    orientation="v",
+                    yanchor="middle",
+                    y=0.5,
+                    xanchor="left",
+                    x=1.02,
+                    font=dict(size=13)
+                ),
+                margin=dict(t=70, b=20, l=20, r=120),  # 👈 spacing fix
+                height=380
+            )
+
+            st.plotly_chart(fig, use_container_width=True)
+
+
+
+
     # ---------- INSIGHTS ----------
         st.markdown("---")
         st.markdown("### 🧠 Key Insights")
